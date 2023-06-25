@@ -1,45 +1,42 @@
 import { nanoid } from 'nanoid';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import ApiService from 'services/ApiService';
+import { ApiFetchReviews } from 'services/ApiService';
 
 const Reviews = () => {
   const { movieId } = useParams();
-  const [markup, setMarkup] = useState(null);
+  const [data, setData] = useState(null);
 
   useEffect(() => {
-    async function fetchCast() {
+    async function fetchReviews() {
       try {
-        const urlByID = `https://api.themoviedb.org/3/movie/${movieId}/reviews?language=en-US&page=1&api_key=3b90c65c34311d75a82ba40dcf7a0596&include_image_language=en,null`;
-
-        const fetchResponse = await ApiService(urlByID);
-        const markupCast = makeMarkup(fetchResponse);
-        setMarkup(markupCast);
+        const fetchResponse = await ApiFetchReviews(movieId);
+        setData(fetchResponse);
       } catch (error) {
         console.log(error);
       }
     }
 
-    fetchCast();
+    fetchReviews();
   }, [movieId]);
 
-  function makeMarkup(data) {
-    return data.results.map(({ author, content }) => {
-      return (
-        <li key={nanoid()}>
-          <h3>{author}</h3>
-          <p>{content}</p>
-        </li>
-      );
-    });
-  }
-
-  if (!markup || markup.length === 0) {
+  if (!data || data.length === 0) {
     return <div>We don`t have any reviews for this movie</div>;
   }
 
-  if (markup) {
-    return <ul>{markup}</ul>;
+  if (data) {
+    return (
+      <ul>
+        {data.results.map(({ author, content }) => {
+          return (
+            <li key={nanoid()}>
+              <h3>{author}</h3>
+              <p>{content}</p>
+            </li>
+          );
+        })}
+      </ul>
+    );
   }
 };
 export default Reviews;

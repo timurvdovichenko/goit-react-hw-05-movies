@@ -1,17 +1,17 @@
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { Link, Outlet, useParams, useLocation } from 'react-router-dom';
-import ApiService from 'services/ApiService';
+import { ApiFetchFilm } from 'services/ApiService';
 
 const CardFilm = () => {
   const { movieId } = useParams();
   const [response, setResponse] = useState(null);
-  const urlByID = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&api_key=3b90c65c34311d75a82ba40dcf7a0596`;
   const location = useLocation();
   const goBackLinkRef = useRef(location.state?.from ?? '/');
+
   useEffect(() => {
     async function fetchFilm() {
       try {
-        const fetchResponse = await ApiService(urlByID);
+        const fetchResponse = await ApiFetchFilm(movieId);
         setResponse(fetchResponse);
       } catch (error) {
         console.log(error);
@@ -19,7 +19,7 @@ const CardFilm = () => {
     }
 
     fetchFilm();
-  }, [movieId, urlByID]);
+  }, [movieId]);
 
   function getGenres(genres) {
     const genresList = genres.map(genre => {
