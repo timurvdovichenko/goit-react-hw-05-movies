@@ -1,8 +1,12 @@
 import axios from 'axios';
 
+const KEY = '3b90c65c34311d75a82ba40dcf7a0596';
+const URL = 'https://api.themoviedb.org/3';
+const LANGUAGE = 'language=en-US';
+
 export async function ApiFetchCast(movieId) {
   try {
-    const urlByID = `https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US&api_key=3b90c65c34311d75a82ba40dcf7a0596`;
+    const urlByID = `${URL}/movie/${movieId}/credits?${LANGUAGE}&api_key=${KEY}`;
 
     const response = await axios.get(urlByID);
     return response.data;
@@ -13,7 +17,7 @@ export async function ApiFetchCast(movieId) {
 
 export async function ApiFetchReviews(movieId) {
   try {
-    const urlByID = `https://api.themoviedb.org/3/movie/${movieId}/reviews?language=en-US&page=1&api_key=3b90c65c34311d75a82ba40dcf7a0596&include_image_language=en,null`;
+    const urlByID = `${URL}/movie/${movieId}/reviews?${LANGUAGE}&page=1&api_key=${KEY}&include_image_language=en,null`;
 
     const response = await axios.get(urlByID);
     return response.data;
@@ -24,7 +28,7 @@ export async function ApiFetchReviews(movieId) {
 
 export async function ApiFetchFilm(movieId) {
   try {
-    const urlByID = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&api_key=3b90c65c34311d75a82ba40dcf7a0596`;
+    const urlByID = `${URL}/movie/${movieId}?${LANGUAGE}&api_key=${KEY}`;
     const response = await axios.get(urlByID);
     return response.data;
   } catch (error) {
@@ -34,7 +38,7 @@ export async function ApiFetchFilm(movieId) {
 
 export async function ApiFetchTrendingDay() {
   try {
-    const urlTrendsDay = `https://api.themoviedb.org/3/trending/movie/day?api_key=3b90c65c34311d75a82ba40dcf7a0596`;
+    const urlTrendsDay = `${URL}/trending/movie/day?api_key=${KEY}`;
     const response = await axios.get(urlTrendsDay);
     return response.data;
   } catch (error) {
@@ -44,7 +48,7 @@ export async function ApiFetchTrendingDay() {
 
 export async function ApiFetchByQuery(query) {
   try {
-    const urlByQuery = `https://api.themoviedb.org/3/search/movie?query=${query}&language=en-US&&api_key=3b90c65c34311d75a82ba40dcf7a0596`;
+    const urlByQuery = `${URL}/search/movie?query=${query}&${LANGUAGE}&api_key=${KEY}`;
 
     const response = await axios.get(urlByQuery);
     return response.data;
