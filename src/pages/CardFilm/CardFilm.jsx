@@ -1,3 +1,4 @@
+import Loader from 'components/Loader/Loader';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { Link, Outlet, useParams, useLocation } from 'react-router-dom';
 import { ApiFetchFilm } from 'services/ApiService';
@@ -48,7 +49,7 @@ const CardFilm = () => {
           <Link to="cast">Cast</Link>
           <Link to="reviews">Reviews</Link>
         </p>
-        <Suspense fallback={<div>Loading... Please wait</div>}>
+        <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>
       </>
